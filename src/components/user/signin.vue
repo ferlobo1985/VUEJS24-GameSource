@@ -1,9 +1,14 @@
 <template>
     <div class="signin_container">
 
-        <!-- loader -->
+        <div class="text-center" v-show="userStore.loading">
+            <v-progress-circular
+                indeterminate
+                color="primary"
+            />
+        </div>
 
-        <Form @submit="onSubmit" :validation-schema="formSchema">
+        <Form @submit="onSubmit" :validation-schema="formSchema" v-show="!userStore.loading">
             <h1 v-text="!type ? 'Sign in':'Register'"></h1>
 
             <div class="form-group">
@@ -89,6 +94,11 @@
     });
 
     function onSubmit(values,{ resetForm }) {
-       //     useUserStore.register(values)
+        if(type.value){
+            /// register
+            userStore.register(values)
+        } else {
+            // sign in
+        }
     }
 </script>
