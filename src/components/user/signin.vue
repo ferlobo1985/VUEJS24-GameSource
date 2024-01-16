@@ -79,7 +79,11 @@
     import { Field, Form } from 'vee-validate';
     import * as yup from 'yup';
     import { ref } from 'vue';
-    
+
+    //// TOASTS
+    import { useToast } from 'vue-toast-notification';
+    const $toast = useToast();
+
     /// AUTH STORE
     import { useUserStore } from '@/stores/user';
     const userStore = useUserStore();
@@ -103,6 +107,18 @@
         }
     }
 
+    // subscribe to error
+    userStore.$onAction(({name,after,onError})=>{
+        if(name === 'register' || name === 'signIn'){
+            after(()=>{
+                $toast.success('Welcome !!')
+            })
+            onError((error)=>{
+                $toast.error(error.message)
+            })
+        }
+    })
 
-    
+
+
 </script>
