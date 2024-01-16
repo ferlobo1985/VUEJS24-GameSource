@@ -8,13 +8,13 @@
             </div>
             <div>
                 <ul>
-                    <li>
+                    <li v-if="!userStore.auth">
                         <router-link :to="{name:'signin'}">
                             Sign in
                         </router-link>
                     </li>
-                    <span>
-                        <li>
+                    <span v-if="userStore.auth">
+                        <li @click="userStore.signOut()">
                             <span>
                                 Logout
                             </span>
@@ -31,3 +31,9 @@
 
     </header>
 </template>
+
+<script setup>
+    // USER STORE
+    import { useUserStore } from '@/stores/user'; 
+    const userStore = useUserStore()
+</script>
