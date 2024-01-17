@@ -7,6 +7,9 @@ import { DB } from '@/utils/firebase';
 import {  collection, getDoc, doc, setDoc, serverTimestamp, updateDoc, query, orderBy, 
 getDocs, limit, startAfter, deleteDoc } from 'firebase/firestore';
 
+// TOASTS
+import { useToast } from "vue-toast-notification";
+const $toast = useToast();
 
 let articlesCol = collection(DB,'articles');
 
@@ -18,6 +21,20 @@ export const useArticleStore = defineStore('article',{
     }),
     getters:{},
     actions:{
+        async updateArticle(id, formData){
+            try{
+                const docRef = doc(DB,'articles',id);
+                await updateDoc(docRef,{
+                    ...formData
+                });
+                /// SHOW TOASTS
+                $toast.success('Updated !!')
+                return true;
+            } catch(error){
+                $toast.success(error.message)
+                throw new Error(error)
+            }
+        },
         async getArticleById(id){
             try{
                 const docRef = await getDoc(doc(DB,'articles',id));

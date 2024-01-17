@@ -1,16 +1,16 @@
 <template>
-    <h1>Add article</h1>
+    <h1>Edit article</h1>
     <hr/>
 
-    <div class="text-center m-3" v-show="loading">
+    <!-- <div class="text-center m-3" v-show="loading">
         <v-progress-circular
             indeterminate
             color="primary"
         />
-    </div>
+    </div> -->
 
 
-    <Form class="mb-5" @submit="onSubmit" :validation-schema="ArticleSchema"  v-show="!loading">
+    <Form class="mb-5" @submit="onSubmit" :validation-schema="ArticleSchema">
 
 
         <!-- 1-Name of the game -->
@@ -116,8 +116,10 @@
         <v-btn
             type="submit"
             variant="outlined"
+            :disabled="loading"
+            :loading="loading"
         >
-            Add article
+            Edit article
         </v-btn>
 
     </Form>
@@ -148,7 +150,11 @@
 
 
     function onSubmit(values,{ resetForm}) {
-       
+        loading.value = true;
+        articleStore.updateArticle(route.params.id,values)
+        .finally(()=>{
+            loading.value = false;
+        })
     }
 
     function updateEditor(value){
@@ -160,6 +166,7 @@
     articleStore.getArticleById(route.params.id)
     .then((response)=>{
         article.value = {...response};
+        updateEditor(response.editor);
         loading.value = false;
     })
     .catch((error)=>{
