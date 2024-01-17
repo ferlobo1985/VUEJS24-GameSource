@@ -13,6 +13,7 @@
     "@tiptap/starter-kit": "^2.1.16",
     "@tiptap/vue-3": "^2.1.16",
     "firebase": "^10.7.1",
+    "firebase-tools": "^13.0.3",
     "pinia": "^2.1.7",
     "vee-validate": "^4.12.4",
     "vue": "^3.3.11",
