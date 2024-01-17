@@ -21,6 +21,19 @@ export const useArticleStore = defineStore('article',{
     }),
     getters:{},
     actions:{
+        async getArticles(docsLimit){
+            try{
+                const q = query(articlesCol, orderBy('timestamp','desc'),limit(docsLimit))
+                const querySnapshot = await getDocs(q);
+                const articles = querySnapshot.docs.map(doc=>({
+                    id:doc.id,
+                    ...doc.data()
+                }));
+                this.homeArticles = articles;
+            } catch(error){
+                throw new Error(error);
+            }
+        },
         async updateArticle(id, formData){
             try{
                 const docRef = doc(DB,'articles',id);
