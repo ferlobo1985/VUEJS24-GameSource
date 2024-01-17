@@ -63,6 +63,7 @@ export const useArticleStore = defineStore('article',{
                 }
                 return docRef.data()
             } catch(error){
+                $toast.success(error.message)
                 router.push({name:'404'})
             }
         },  
