@@ -55,6 +55,19 @@
         </div>
 
         <!-- 4-WYSIWYG  -->
+        <div clas="mb-4">
+            <WYSIWYG @update="updateEditor"/>
+            <Field name="editor" v-model="veditor" v-slot="{field, errors, errorMessage}">
+                <input
+                    type="hidden"
+                    id="veditor"
+                    v-bind="field"
+                />
+                <div class="input_alert" v-if="errors.length !== 0">
+                    {{ errorMessage }}
+                </div>
+            </Field>
+        </div>
 
         <!-- 5-Rating -->
         <div class="mb-4">
@@ -109,12 +122,19 @@
     import { ref } from 'vue';
     import { Field, Form } from 'vee-validate';
     import ArticleSchema from './schema'
+    /// WYSIWYG
+    import WYSIWYG from '@/utils/wysiwyg.vue'
 
-    const ratingArray = [0,1,2,3,4,5]
+    const ratingArray = [0,1,2,3,4,5];
+    const veditor = ref('');
 
 
     function onSubmit(values,{ resetForm}) {
         console.log(values);
+    }
+
+    function updateEditor(value){
+        veditor.value = value
     }
 
 
