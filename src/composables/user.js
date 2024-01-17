@@ -7,7 +7,7 @@ import { useUserStore } from '@/stores/user';
 export const updateProfile = () => {
     const userStore = useUserStore();
     const firstname = ref(userStore.user.firstname);
-    const lastname = ref(useUserStore.user.lastname);
+    const lastname = ref(userStore.user.lastname);
     
     const loading = ref(false);
     const formSchema = yup.object({
@@ -19,8 +19,12 @@ export const updateProfile = () => {
             .max(100,'You lastname is too long')
     });
 
-    function onSubmit(value,{ resetForm }){
-        console.log(value)
+    function onSubmit(values,{ resetForm }){
+        loading.value = true;
+        userStore.updateProfile(values)
+        .finally(()=>{
+            loading.value = false;
+        })
     }
 
     return { loading, formSchema, onSubmit,firstname, lastname }
