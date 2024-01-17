@@ -58,7 +58,7 @@ export const useArticleStore = defineStore('article',{
                     owner:{
                         uid:user.uid,
                         firstname: user.firstname,
-                        lastnme: user.lastname
+                        lastname: user.lastname
                     },
                     ...formData
                 });
@@ -66,6 +66,25 @@ export const useArticleStore = defineStore('article',{
                 router.push({name:'admin_articles', query:{reload:true}})
                 return true;
             }catch(error){
+                throw new Error(error)
+            }
+        },
+        async adminGetArticles(docLimit){
+            try{
+                const q = query(articlesCol,orderBy('timestamp','desc'),limit(docLimit));
+                const querySnapshot = await getDocs(q);
+
+                const lastVisible = querySnapshot.docs[querySnapshot.docs.length-1];
+                const articles = querySnapshot.docs.map(doc=>({
+                    id:doc.id,
+                    ...doc.data()
+                }));
+
+                /// UPDATE ADMIN ARTICLES STATE
+                this.adminArticles = articles;
+                this.adminLastVisible = lastVisible;
+            } catch(error){
+                $toast.success(error.message)
                 throw new Error(error)
             }
         }
