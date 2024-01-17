@@ -19,7 +19,11 @@ export const useArticleStore = defineStore('article',{
         adminArticles:'',
         adminLastVisible:''
     }),
-    getters:{},
+    getters:{
+        getFeaturesSlides(state){
+            return state.homeArticles.slice(0,2)
+        }
+    },
     actions:{
         async getArticles(docsLimit){
             try{
