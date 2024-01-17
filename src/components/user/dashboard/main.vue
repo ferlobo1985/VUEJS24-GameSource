@@ -1,3 +1,3 @@
 <template>
-    main temp
+    dashboard
 </template>
