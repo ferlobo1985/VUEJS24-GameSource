@@ -8,7 +8,7 @@ import {  collection, getDoc, doc, setDoc, serverTimestamp, updateDoc, query, or
 getDocs, limit, startAfter, deleteDoc } from 'firebase/firestore';
 
 
-let articlesCol = collection(DB,'acticles');
+let articlesCol = collection(DB,'articles');
 
 export const useArticleStore = defineStore('article',{
     state:()=>({
@@ -18,6 +18,17 @@ export const useArticleStore = defineStore('article',{
     }),
     getters:{},
     actions:{
+        async getArticleById(id){
+            try{
+                const docRef = await getDoc(doc(DB,'articles',id));
+                if(!docRef.exists()){
+                    throw new Error('Could not find document')
+                }
+                return docRef.data()
+            } catch(error){
+                router.push({name:'404'})
+            }
+        },  
         async addArticle(formData){
             try{
                 // GET USER PROFILE

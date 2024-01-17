@@ -3,6 +3,7 @@ import { isAuth, isLoggedIn } from '@/composables/auth';
 
 import Home from '@/components/home/index.vue'
 import Signin from '@/components/user/signin.vue';
+import NotFound from '@/components/404.vue'
 
 import Dashboard from '@/components/user/dashboard/index.vue';
 import DashboardMain from '@/components/user/dashboard/main.vue';
@@ -24,6 +25,7 @@ const router = createRouter({
       {path:'articles/add', component:AdminAddArticle, name:'admin_add'},
       {path:'articles/edit/:id', component:AdminEditArticle, name:'admin_edit'},
     ]},
+    {path:'/:notFound(.*)*',component:NotFound,name:'404'}
   ]
 })
 
