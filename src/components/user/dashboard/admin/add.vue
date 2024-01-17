@@ -124,6 +124,9 @@
     import ArticleSchema from './schema'
     /// WYSIWYG
     import WYSIWYG from '@/utils/wysiwyg.vue'
+    // ARTICLE STORE
+    import { useArticleStore } from '@/stores/articles';
+    const articleStore = useArticleStore();
 
     const ratingArray = [0,1,2,3,4,5];
     const veditor = ref('');
